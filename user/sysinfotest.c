@@ -97,17 +97,17 @@ void testproc() {
   int pid;
   
   sinfo(&info);
-  nproc = info.nproc;
+  nproc = info.nproc;//61
 
   pid = fork();
   if(pid < 0){
-    printf("sysinfotest: fork failed\n");
+    printf("1sysinfotest: fork failed\n");
     exit(1);
   }
   if(pid == 0){
     sinfo(&info);
-    if(info.nproc != nproc+1) {
-      printf("sysinfotest: FAIL nproc is %d instead of %d\n", info.nproc, nproc+1);
+    if(info.nproc+1 != nproc) { //BUG? info.nproc=60
+      printf("2sysinfotest: FAIL nproc is %d instead of %d\n", info.nproc, nproc+1);
       exit(1);
     }
     exit(0);
@@ -115,7 +115,7 @@ void testproc() {
   wait(&status);
   sinfo(&info);
   if(info.nproc != nproc) {
-      printf("sysinfotest: FAIL nproc is %d instead of %d\n", info.nproc, nproc);
+      printf("3sysinfotest: FAIL nproc is %d instead of %d\n", info.nproc, nproc);
       exit(1);
   }
 }

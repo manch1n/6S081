@@ -198,6 +198,8 @@ UPROGS=\
 	$U/_primes\
 	$U/_find\
 	$U/_xargs\
+	$U/_trace\
+	$U/_sysinfotest\
 
 
 
@@ -216,8 +218,6 @@ ifeq ($(LAB),lazy)
 UPROGS += \
 	$U/_lazytests
 endif
-
-<<<<<<< HEAD
 
 
 
