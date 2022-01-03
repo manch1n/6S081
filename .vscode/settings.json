@@ -5,5 +5,5 @@
     "C_Cpp.default.compilerArgs": [
         "-DLAB_PGTBL"
     ],
-    "editor.formatOnSaveMode": "modifications"
+    "//editor.formatOnSaveMode": "modifications"
 }

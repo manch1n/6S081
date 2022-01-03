@@ -78,23 +78,22 @@ kvminithart()
 //   12..20 -- 9 bits of level-0 index.
 //    0..11 -- 12 bits of byte offset within the page.
 pte_t *
-walk(pagetable_t pagetable, uint64 va, int alloc)
-{
+walk(pagetable_t pagetable, uint64 va, int alloc) {
   if(va >= MAXVA)
     panic("walk");
 
   for(int level = 2; level > 0; level--) {
-    pte_t *pte = &pagetable[PX(level, va)];
-    if(*pte & PTE_V) {
+    pte_t *pte = &pagetable[PX(level, va)]; //取得level的PTE，PX得到该va的level索引
+    if(*pte & PTE_V) {                        //如果该PTE有效
       pagetable = (pagetable_t)PTE2PA(*pte);
-    } else {
+    } else {                                //否则新分配一个物理页作为该level的table
       if(!alloc || (pagetable = (pde_t*)kalloc()) == 0)
         return 0;
       memset(pagetable, 0, PGSIZE);
       *pte = PA2PTE(pagetable) | PTE_V;
     }
   }
-  return &pagetable[PX(0, va)];
+  return &pagetable[PX(0, va)];         //返回va的level0的PTE
 }
 
 // Look up a virtual address, return the physical address,
