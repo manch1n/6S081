@@ -1,6 +1,7 @@
 #### LAB PGTBL （2021 MIT6S018）
-[官网实验地址](https://pdos.csail.mit.edu/6.828/2021/labs/pgtbl.html)
 这个实验帮助理解页表及其怎么将虚拟地址转换为物理地址。
+[官网实验地址](https://pdos.csail.mit.edu/6.828/2021/labs/pgtbl.html)
+[我的github地址](https://github.com/manch1n/6S081lab/tree/mypgtbl)
 ![XV6的PTE](https://raw.githubusercontent.com/manch1n/picbed/master/images/20220103134110.png)
 ![XV6的虚地址](https://raw.githubusercontent.com/manch1n/picbed/master/images/20220103134159.png)
 
