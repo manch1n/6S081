@@ -81,6 +81,51 @@ int
 sys_pgaccess(void)
 {
   // lab pgtbl: your code here.
+  uint64 base, mask;
+  int len;
+  if (argaddr(0, &base) < 0)
+  {
+    return -1;
+  }
+  if (argint(1, &len) < 0)
+  {
+    return -1;
+  }
+  if (argaddr(2, &mask) < 0)
+  {
+    return -1;
+  }
+  struct proc *myp = myproc();
+  uint64 va = PGROUNDDOWN((uint64)base);
+  char kernalbuf[256] = {0};
+  if (len > 256 * 8)
+  {
+    return -1;
+  }
+  for (int i = 0; i < len; ++i)
+  {
+    pte_t *pte = walk(myp->pagetable, va, 0);
+    if (pte == 0)
+    {
+      return -1;
+    }
+    if ((*pte & PTE_A))
+    {
+      //printf("va: %p i: %d\n", va, i);
+      kernalbuf[i / 8] |= (1 << (i % 8));
+      *pte = CLEAR_PTE_A(*pte);
+    }
+    va += PGSIZE;
+  }
+  int clen = len / 8;
+  if (len % 8 != 0)
+  {
+    clen += 1;
+  }
+  if (copyout(myp->pagetable, mask, kernalbuf, clen) < 0)
+  {
+    return -1;
+  }
   return 0;
 }
 #endif

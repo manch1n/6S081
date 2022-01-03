@@ -117,6 +117,7 @@ walkaddr(pagetable_t pagetable, uint64 va)
   if((*pte & PTE_U) == 0)
     return 0;
   pa = PTE2PA(*pte);
+  *pte = SET_PTE_A(*pte);
   return pa;
 }
 
@@ -432,3 +433,31 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
     return -1;
   }
 }
+
+const static char _vmprintprefix[][10] = {" ..", " .. ..", " .. .. .."};
+
+static void _vmprint(pagetable_t ptbl, int depth)
+{
+  for (int i = 0; i < 512; ++i)
+  {
+    pte_t pte = ptbl[i];
+    if (pte & PTE_V)
+    {
+      printf("%s%d: pte %p pa %p\n", _vmprintprefix[depth], i, pte, PTE2PA(pte));
+      if (depth < 2)
+      {
+        _vmprint((pagetable_t)(PTE2PA(pte)), depth + 1);
+      }
+    }
+  }
+}
+
+void vmprint(pagetable_t ptbl)
+{
+  printf("page table %p\n", ptbl);
+  _vmprint(ptbl, 0);
+}
+
+//page 0 contains text and data of the program. page 2 contains the stack of the program
+//page 1 is guard page,when in user mode,the process could not r/w the page.
+//page 3 or later contains tranpoline,tranframe and usys page.
