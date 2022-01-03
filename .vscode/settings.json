@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "defs.h": "c"
+    },
+    "C_Cpp.default.compilerArgs": [
+        "-DLAB_PGTBL"
+    ],
+    "editor.formatOnSaveMode": "modifications"
+}
