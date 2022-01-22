@@ -5,4 +5,6 @@
 
 [syscall](https://github.com/manch1n/6S081lab/tree/mysyscall)
 
-[pgtbl(有写见解)](https://github.com/manch1n/6S081lab/tree/mypgtbl) 
+[pgtbl(有写解释)](https://github.com/manch1n/6S081lab/tree/mypgtbl) 
+
+[traps(有写解释)](https://github.com/manch1n/6S081lab/tree/mytraps)
