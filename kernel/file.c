@@ -21,6 +21,7 @@ struct
   struct file file[NFILE];
 } ftable;
 
+// FIXME:在进程退出时释放没有写
 struct
 {
   struct mmap mmap[MMAPMAX];
